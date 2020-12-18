@@ -11,16 +11,23 @@ function BowlingPins() {
     fontFamily: 'Fira Code',
     maxWidth: '100%',
   };
-
-  const [defaultPinValue, setDefaultPinValue] = useState([10]);
-  const [selectedPinValue, setSelectedPinValue] = useState([3]);
+  // DEFAULT PINS
+  const defaultPinAmount = 10;
+  // TOTALT PINS VARJE RUNDA
+  const [pinsEachRound, setPinsEachRound] = useState(defaultPinAmount);
+  // PINS KNOCKDOWN VARJE RUNDA
+  const pinsKnockedDown = 3;
+  // PINS KVAR VARJE RUNDA
+  const pinsLeft = defaultPinAmount - pinsKnockedDown;
+  // LOG
+  console.log(pinsEachRound, pinsKnockedDown, pinsLeft);
 
   return (
     <React.Fragment>
       <div style={styles}>
         <button
-          value={defaultPinValue - selectedPinValue}
-          onClick={(e) => setDefaultPinValue(e.target.value)}
+          value={defaultPinAmount - pinsKnockedDown}
+          onClick={(e) => setPinsEachRound(e.target.value)}
         >
           1
         </button>
