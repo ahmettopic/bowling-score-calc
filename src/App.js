@@ -17,7 +17,7 @@ class App extends Component {
     return (
       <React.Fragment>
         <div>
-          <div style={styles}>BowlingScoreChallange</div>
+          <div style={styles}>BowlingScoreChallenge</div>
           <BowlingPins />
         </div>
       </React.Fragment>
