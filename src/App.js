@@ -1,5 +1,6 @@
 // Core
 import React, { Component } from 'react';
+
 import BowlingPins from './components/BowlingPins';
 
 const styles = {
@@ -15,12 +16,10 @@ const styles = {
 class App extends Component {
   render() {
     return (
-      <React.Fragment>
-        <div>
-          <div style={styles}>BowlingScoreChallenge</div>
-          <BowlingPins />
-        </div>
-      </React.Fragment>
+      <div>
+        <div style={styles}>BowlingScoreChallenge</div>
+        <BowlingPins />
+      </div>
     );
   }
 }
