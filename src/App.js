@@ -4,13 +4,13 @@ import React, { Component } from 'react';
 import BowlingPins from './components/BowlingPins';
 
 const styles = {
+  width: '100%',
   display: 'flex',
-  flexDirection: 'column',
+  height: '5vh',
   justifyContent: 'center',
   textAlign: 'center',
-  fontSize: '22px',
+  fontSize: '32px',
   fontFamily: 'Fira Code',
-  minWidth: '100%',
 };
 
 class App extends Component {
