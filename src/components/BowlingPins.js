@@ -4,40 +4,58 @@ class BowlingPins extends Component {
   state = {
     defaultPinAmount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     counter: 1, // update counter each turn
-    currentRound: 1, // something
-    totalScore: 0,
+    selectedPinAmount: 0,
+    updateTotalScore: '0',
+    currentThrow: 1, // set Throws
+    currentRound: 1,
+    totalRounds: 10,
     spare: false, // Check if player got spare
-    strike: false, // Check if player got Strike
+    strike: 0, // Check if player got Strike
     showPins: true,
   };
 
-  checkCount = () => {
+  gameHandler = () => {
     if (this.state.counter === 2) {
       return this.setState(
         {
           showPins: false,
-          counter: this.state.counter - 2,
+          counter: this.state.counter - 1,
           currentRound: this.state.currentRound + 1,
+          totalRounds: this.state.totalRounds - 1,
         },
-        console.log('Round Finished!')
+        console.log('Round Finished')
       );
-
-      //RETURN COMPONENT HERE
     } else {
-      return this.setState({ counter: this.state.counter + 1 });
+      return this.setState({
+        counter: this.state.counter + 1,
+        currentThrow: this.state.currentThrow + 1,
+      });
     }
   };
 
   selectedPinValue = (i) => {
-    this.setState((state) => {
-      const defaultPinAmount = state.defaultPinAmount.slice((1, i + 1));
+    this.setState(
+      (state) => {
+        let defaultPinAmount = state.defaultPinAmount.slice((1, i + 1));
+        let selectedPinAmount = i + 1;
+        if (selectedPinAmount === 10) {
+          state.strike = 1;
+          state.showPins = false;
+          console.log('STRIKE!');
+        }
+        return {
+          defaultPinAmount,
+          selectedPinAmount,
+        };
+      },
 
-      return {
-        defaultPinAmount,
-      };
-    });
-    console.log('selectedPinAmount: ' + (i + 1));
-    this.checkCount();
+      this.setState((prevState) => ({
+        updateTotalScore: prevState.selectedPinAmount + (i + 1),
+      }))
+    );
+
+    console.log('PINS STRIKED: ' + (i + 1));
+    this.gameHandler();
   };
 
   render() {
@@ -64,12 +82,9 @@ class BowlingPins extends Component {
           >
             {this.state.defaultPinAmount.map((item, index) => (
               <div
-                onMouseOver={this.selectedPinValueCOUNTER}
                 key={item}
-                type="button"
                 onClick={() =>
-                  this.selectedPinValue(index) &
-                  (this.state.counter + 1, this.state.totalScore + index)
+                  this.selectedPinValue(index) & (this.state.counter + 1)
                 }
               >
                 {this.state.showPins ? <Pin /> : null}
@@ -77,7 +92,25 @@ class BowlingPins extends Component {
             ))}
           </div>
         </div>
-        <button onClick={this.checkCount}>MISS</button>
+        <div
+          style={{
+            backgroundColor: '#ff4242',
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '20px',
+          }}
+          onClick={this.gameHandler}
+        >
+          MISS
+        </div>
+
+        <div>
+          <p>Current Round: {this.state.currentRound}</p>
+          <p>Rounds Left: {this.state.totalRounds}</p>
+
+          <p>Amount of Strikes: {this.state.strike}</p>
+          <p>Current score: {this.state.updateTotalScore}</p>
+        </div>
       </React.Fragment>
     );
   }
